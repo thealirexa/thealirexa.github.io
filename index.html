@@ -14,16 +14,69 @@
       @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap");
       body {
         font-family: "JetBrains Mono", "Courier New", monospace;
+        transition: background-color 150ms ease, color 150ms ease;
+      }
+
+      body.theme-dark {
         background: #000000;
         color: #c9d1d9;
       }
-      ::selection {
+
+      body.theme-light {
+        background: #f9fafb;
+        color: #111827;
+      }
+
+      /* selection */
+      body.theme-dark ::selection {
         background: #1f6feb;
-        color: #fff;
+        color: #ffffff;
+      }
+
+      body.theme-light ::selection {
+        background: #bfdbfe;
+        color: #111827;
+      }
+
+      /* override key tailwind text colors for light theme */
+      body.theme-light .text-white {
+        color: #111827 !important;
+      }
+
+      body.theme-light .text-gray-300 {
+        color: #4b5563 !important;
+      }
+
+      body.theme-light .text-gray-400 {
+        color: #6b7280 !important;
+      }
+
+      body.theme-light .text-gray-500 {
+        color: #6b7280 !important;
+      }
+
+      body.theme-light .text-gray-600 {
+        color: #9ca3af !important;
+      }
+
+      body.theme-light .text-stone-300 {
+        color: #1f2933 !important;
+      }
+
+      body.theme-light .text-stone-400 {
+        color: #4b5563 !important;
+      }
+
+      body.theme-light .border-gray-800 {
+        border-color: #e5e7eb !important;
+      }
+
+      body.theme-light a.text-gray-400:hover {
+        color: #22c55e !important;
       }
     </style>
   </head>
-  <body class="antialiased">
+  <body class="antialiased theme-dark">
     <div class="container mx-auto py-4 px-4 sm:py-6 sm:px-6 max-w-4xl">
       <!-- Header -->
       <header class="mb-4 sm:mb-6">
@@ -518,7 +571,73 @@
         <div class="text-xs sm:text-sm text-gray-600 font-mono mt-1">
           © 2025 alireza.moghaddam
         </div>
+        <div
+          class="mt-3 flex flex-wrap items-center justify-start gap-2 text-xs sm:text-sm font-mono text-gray-600"
+        >
+          <span class="text-lime-500">//</span>
+          <span>theme:</span>
+          <button
+            id="theme-toggle"
+            type="button"
+            class="inline-flex items-center gap-1 rounded border border-gray-800 px-2 py-1 text-xs sm:text-sm text-gray-400 hover:text-lime-500 hover:border-lime-500 transition-colors"
+          >
+            <span id="theme-toggle-icon">🌙</span>
+            <span id="theme-toggle-label">dark</span>
+          </button>
+        </div>
       </footer>
     </div>
+    <script>
+      (function () {
+        const storageKey = "am-theme";
+
+        function getPreferredTheme() {
+          const stored = window.localStorage.getItem(storageKey);
+          if (stored === "light" || stored === "dark") return stored;
+
+          if (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: light)").matches
+          ) {
+            return "light";
+          }
+
+          return "dark";
+        }
+
+        function applyTheme(theme) {
+          const body = document.body;
+          body.classList.remove("theme-light", "theme-dark");
+          body.classList.add(theme === "light" ? "theme-light" : "theme-dark");
+
+          const label = document.getElementById("theme-toggle-label");
+          const icon = document.getElementById("theme-toggle-icon");
+          if (label && icon) {
+            if (theme === "light") {
+              label.textContent = "light";
+              icon.textContent = "☀️";
+            } else {
+              label.textContent = "dark";
+              icon.textContent = "🌙";
+            }
+          }
+        }
+
+        const initialTheme = getPreferredTheme();
+        applyTheme(initialTheme);
+
+        const toggleBtn = document.getElementById("theme-toggle");
+        if (toggleBtn) {
+          toggleBtn.addEventListener("click", function () {
+            const current = document.body.classList.contains("theme-light")
+              ? "light"
+              : "dark";
+            const next = current === "light" ? "dark" : "light";
+            window.localStorage.setItem(storageKey, next);
+            applyTheme(next);
+          });
+        }
+      })();
+    </script>
   </body>
 </html>
