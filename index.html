@@ -48,23 +48,28 @@
       }
 
       body.theme-light .text-gray-400 {
-        color: #6b7280 !important;
+        color: #6b7280 !important; /* slate-500 */
       }
 
       body.theme-light .text-gray-500 {
-        color: #6b7280 !important;
+        color: #4b5563 !important; /* slate-600 for stronger contrast */
       }
 
       body.theme-light .text-gray-600 {
-        color: #9ca3af !important;
+        color: #374151 !important; /* slate-700 for section labels / dividers */
       }
 
       body.theme-light .text-stone-300 {
-        color: #1f2933 !important;
+        color: #111827 !important;
       }
 
       body.theme-light .text-stone-400 {
-        color: #4b5563 !important;
+        color: #1f2937 !important;
+      }
+
+      /* make lime accents a bit deeper on light background */
+      body.theme-light .text-lime-500 {
+        color: #15803d !important; /* green-700 */
       }
 
       body.theme-light .border-gray-800 {
@@ -72,7 +77,7 @@
       }
 
       body.theme-light a.text-gray-400:hover {
-        color: #22c55e !important;
+        color: #16a34a !important; /* toned-down lime on hover */
       }
     </style>
   </head>
@@ -579,7 +584,7 @@
           <button
             id="theme-toggle"
             type="button"
-            class="inline-flex items-center gap-1 rounded border border-gray-800 px-2 py-1 text-xs sm:text-sm text-gray-400 hover:text-lime-500 hover:border-lime-500 transition-colors"
+            class="inline-flex items-center gap-1 px-2 py-1 text-xs sm:text-sm text-gray-400 hover:text-lime-500 transition-colors"
           >
             <span id="theme-toggle-icon">🌙</span>
             <span id="theme-toggle-label">dark</span>
